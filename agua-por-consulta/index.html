@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quanta água custa uma pergunta?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yrsa:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFFAF2;
+    --brown: #26150B;
+    --brown-soft: #5A4A3F;
+    --orange: #D1662A;
+    --orange-light: #E8A578;
+    --peach: #F4DCC8;
+    --water: #4A7C82;
+    --water-light: #7FAEB3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--brown);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .wrap-narrow {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 64px;
+  }
+
+  .hexlogo {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  header span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--brown-soft);
+  }
+
+  .hero {
+    text-align: center;
+  }
+
+  .hero .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stats-row,
+  .action-row {
+    justify-content: center;
+  }
+
+  h1 {
+    font-family: 'Yrsa', serif;
+    font-weight: 600;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.12;
+    color: var(--brown);
+    margin-bottom: 22px;
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--brown-soft);
+    max-width: 46ch;
+    margin-bottom: 36px;
+  }
+
+  .lede strong {
+    color: var(--brown);
+    font-weight: 600;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 36px;
+  }
+
+  .stat-num {
+    font-family: 'Yrsa', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--brown-soft);
+    margin-top: 6px;
+  }
+
+  button.ask {
+    background: var(--orange);
+    color: var(--cream);
+    border: none;
+    padding: 16px 30px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+    box-shadow: 0 6px 18px rgba(209, 102, 42, 0.25);
+  }
+
+  button.ask:hover {
+    background: #B8541E;
+    transform: translateY(-1px);
+  }
+
+  button.ask:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  button.reset {
+    background: none;
+    border: none;
+    color: var(--brown-soft);
+    font-size: 14px;
+    margin-left: 18px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Cup */
+  .bottle-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 48px;
+  }
+
+  .bottle-wrap {
+    position: relative;
+    width: 230px;
+  }
+
+  svg.bottle-outline {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  .water-clip {
+    transition: transform 1.1s cubic-bezier(0.34, 1.2, 0.4, 1);
+  }
+
+  .wave {
+    animation: wave-move 3.2s linear infinite;
+  }
+
+  @keyframes wave-move {
+    from { transform: translateX(0); }
+    to { transform: translateX(-60px); }
+  }
+
+  .milestone-line {
+    stroke: var(--brown);
+    stroke-width: 1.4;
+    stroke-dasharray: 3 4;
+    opacity: 0.55;
+  }
+
+  .milestone-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9.5px;
+    fill: var(--brown-soft);
+  }
+
+  .callout {
+    margin-top: 22px;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  .callout-text {
+    font-family: 'Yrsa', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--orange);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .callout-text.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .divider {
+    margin: 72px 0 48px;
+    height: 14px;
+  }
+
+  .source {
+    font-size: 13px;
+    color: var(--brown-soft);
+    line-height: 1.7;
+    max-width: 60ch;
+  }
+
+  .source a {
+    color: var(--orange);
+  }
+
+  .fixed-note {
+    margin-top: 28px;
+    font-family: 'Yrsa', serif;
+    font-size: 21px;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--brown);
+    max-width: 42ch;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.45;
+  }
+
+  .cta-link {
+    margin-top: 16px;
+  }
+
+  .cta-link a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--orange);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cta-link a:hover {
+    color: #B8541E;
+  }
+
+  @media (max-width: 760px) {
+    .stats-row {
+      gap: 28px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .water-clip, .wave, .callout-text { transition: none; animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <svg class="hexlogo" viewBox="0 0 100 100" fill="none">
+      <polygon points="50,4 91,27 91,73 50,96 9,73 9,27" stroke="#26150B" stroke-width="4" fill="none"/>
+      <rect x="36" y="36" width="28" height="28" fill="#D1662A" transform="rotate(15 50 50)"/>
+    </svg>
+    <span>Little Box</span>
+  </header>
+
+  <div class="hero wrap-narrow">
+    <div>
+      <h1>Cada interação com a IA&nbsp;<br>tem um custo energético&nbsp;<br>que não se vê.</h1>
+      <p class="lede">
+        Você sabia que toda interação com um modelo de IA consome água para resfriar os servidores que processam sua consulta?
+        Com base em pesquisa científica*, estimamos <strong>2 ml por consulta</strong>.
+        Clique no botão e veja o copo encher, uma pergunta de cada vez.
+      </p>
+
+      <div class="stats-row">
+        <div>
+          <div class="stat-num" id="numQueries">0</div>
+          <div class="stat-label">consultas feitas</div>
+        </div>
+        <div>
+          <div class="stat-num" id="numMl">0</div>
+          <div class="stat-label">mililitros consumidos</div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="ask" id="askBtn">Simular uma pergunta →</button>
+        <button class="reset" id="resetBtn">recomeçar</button>
+      </div>
+    </div>
+
+    <div class="bottle-stage">
+      <div class="bottle-wrap">
+        <svg class="bottle-outline" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="bottleClip">
+              <path d="M58 18 h124 l-14 190 c-1 14 -13 24 -27 24 h-42 c-14 0 -26 -10 -27 -24 z"/>
+            </clipPath>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7FAEB3"/>
+              <stop offset="100%" stop-color="#4A7C82"/>
+            </linearGradient>
+          </defs>
+
+          <!-- water fill, clipped to cup shape -->
+          <g clip-path="url(#bottleClip)">
+            <rect id="waterRect" class="water-clip" x="0" y="232" width="240" height="260" fill="url(#waterGrad)" transform="translate(0,0)"/>
+            <g class="wave" id="waveGroup" transform="translate(0,232)">
+              <path d="M-60 0 Q -45 -6 -30 0 T 0 0 T 30 0 T 60 0 T 90 0 T 120 0 T 150 0 T 180 0 T 210 0 T 240 0 T 270 0 T 300 0 V 20 H -60 Z" fill="#7FAEB3" opacity="0.7"/>
+            </g>
+          </g>
+
+          <!-- 50ml midline marker -->
+          <line x1="66" y1="125" x2="174" y2="125" class="milestone-line"/>
+          <text x="178" y="129" class="milestone-label">50 ml</text>
+
+          <!-- cup outline on top -->
+          <path d="M58 18 h124 l-14 190 c-1 14 -13 24 -27 24 h-42 c-14 0 -26 -10 -27 -24 z"
+                fill="none" stroke="#26150B" stroke-width="4" stroke-linejoin="round"/>
+          <!-- rim -->
+          <ellipse cx="120" cy="18" rx="62" ry="7" fill="none" stroke="#26150B" stroke-width="4"/>
+        </svg>
+      </div>
+
+      <div class="callout">
+        <div class="callout-text show" id="callout">Você já pensou quantas interações faz por dia?</div>
+      </div>
+
+      <p class="fixed-note">Com a IA Responsável da Little Box, cada aplicação ou agente é construído para atingir os seus objetivos com o menor número de interações possíveis.</p>
+      <p class="cta-link"><a href="https://www.littlebox.ai" target="_blank" rel="noopener">www.littlebox.ai</a></p>
+    </div>
+  </div>
+
+  <div class="divider">
+    <svg width="100%" height="14" viewBox="0 0 1100 14" preserveAspectRatio="none">
+      <path d="M0 7 Q 25 0 50 7 T 100 7 T 150 7 T 200 7 T 250 7 T 300 7 T 350 7 T 400 7 T 450 7 T 500 7 T 550 7 T 600 7 T 650 7 T 700 7 T 750 7 T 800 7 T 850 7 T 900 7 T 950 7 T 1000 7 T 1050 7 T 1100 7"
+            fill="none" stroke="#D1662A" stroke-width="2" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <p class="source">
+    * Estimativa baseada em Jegham et al., <em>"How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference"</em> (arXiv, 2025), que calcula o consumo de água por consulta a partir da energia gasta na inferência e dos fatores de eficiência hídrica (WUE) dos data centers. O valor varia por modelo e infraestrutura — aqui usamos uma média ilustrativa de 2 ml por consulta, e um copo de 100 ml como referência de capacidade total.
+  </p>
+
+</div>
+
+<script>
+  const ML_PER_QUERY = 2;
+  const CUP_CAPACITY_ML = 100;
+  const CUP_TOP_Y = 22;    // y where water would be "full" inside clip path
+  const CUP_BOTTOM_Y = 232; // y where water is empty
+
+  let queries = 0;
+  let ml = 0;
+  let halfShown = false;
+  let fullShown = false;
+
+  const numQueries = document.getElementById('numQueries');
+  const numMl = document.getElementById('numMl');
+  const waterRect = document.getElementById('waterRect');
+  const waveGroup = document.getElementById('waveGroup');
+  const callout = document.getElementById('callout');
+  const askBtn = document.getElementById('askBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function updateCup() {
+    const fraction = Math.min(ml / CUP_CAPACITY_ML, 1);
+    const waterY = CUP_BOTTOM_Y - fraction * (CUP_BOTTOM_Y - CUP_TOP_Y);
+    const translateY = waterY - CUP_BOTTOM_Y;
+    waterRect.style.transform = `translateY(${translateY}px)`;
+    waveGroup.setAttribute('transform', `translate(0, ${waterY})`);
+  }
+
+  function showCallout(text) {
+    callout.textContent = text;
+    callout.classList.remove('show');
+    void callout.offsetWidth;
+    callout.classList.add('show');
+  }
+
+  askBtn.addEventListener('click', () => {
+    queries += 1;
+    ml += ML_PER_QUERY;
+    numQueries.textContent = queries;
+    numMl.textContent = ml;
+    updateCup();
+
+    if (ml >= CUP_CAPACITY_ML && !fullShown) {
+      fullShown = true;
+      showCallout(`${queries} perguntas depois: um copo cheio, do zero.`);
+    } else if (ml >= 50 && !halfShown) {
+      halfShown = true;
+      showCallout('Meio copo já se foi.');
+    } else if (ml > CUP_CAPACITY_ML) {
+      showCallout('E o copo já transbordou — só com uma pessoa perguntando.');
+    } else if (queries === 1) {
+      showCallout('Só isso já pesa. Imagine multiplicado por milhões.');
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    queries = 0;
+    ml = 0;
+    halfShown = false;
+    fullShown = false;
+    numQueries.textContent = '0';
+    numMl.textContent = '0';
+    callout.classList.remove('show');
+    updateCup();
+  });
+
+  updateCup();
+</script>
+
+</body>
+</html>
